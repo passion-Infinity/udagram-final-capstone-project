@@ -3,13 +3,10 @@ This is a final project of udagram. It's the Capstone Project. I re-used code fr
 
 * It is built on Serverless technology using AWS Lambda.
 
-* It is built on React library.
+* It is built on React library, ran docker locally and deployed on kubernetes cluster.
 
 ## GitHub Repository Link:
-
-
-## Application Link:
-
+`https://github.com/passion-Infinity/udagram-final-capstone-project`
 
 # Functionality of the application
 
@@ -56,10 +53,13 @@ To implement authentication in your application, you would have to create an Aut
 
 ## Deployment
 Kubernetes cluster
+Using eksctl to create kubernetes cluster
 
 ```
-kubectl apply -f deployment
-kubectl get pods 
+eksctl create cluster --name <cluster-name> --region <region-code> --nodegroup-name <nodegroup-name> --node-type <node-type>
+
+ex: region -> us-east-1
+ex: node-type -> m5.large
 ```
 
 # How to run the application
@@ -78,6 +78,8 @@ sls deploy -v
 
 To run a client application first edit the `client/src/config.ts` file to set correct parameters. And then run the following commands:
 
+### Locally system
+
 ```
 cd client
 npm install
@@ -87,8 +89,21 @@ npm run start
 or
 
 ```
-docker pull nlcd/udagram-todos-client:latest
-docker run -it --name <container-name> -p 3000:80 <image-name>
+docker-compose -f client/ up -d
+```
+
+or
+
+```
+docker build -f client/Dockerfile -t <image-name> ./client
+docker run -it --name <container-name> -p <port>:80 <image-name>
+```
+
+or
+
+```
+docker pull nlcd/udagram-todos-client
+docker run -it --name <container-name> -p <port>:80 <image-name>
 ```
 
 This should start a development server with the React application that will interact with the serverless TODO application.
