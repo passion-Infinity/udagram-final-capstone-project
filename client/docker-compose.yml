@@ -1,0 +1,8 @@
+version: "3"
+services:
+  todos:
+    build:
+      context: .
+    image: udagram-todos-client
+    ports:
+      - 3000:80
